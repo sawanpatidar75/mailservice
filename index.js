@@ -31,13 +31,15 @@ app.post('/send-email', function(req, res) {
   console.log("email body: ",emailBody);
 
   const transporter = nodemailer.createTransport({
-    // Configure your email service provider details here
-    service: 'Gmail', // e.g., 'Gmail', 'SendGrid'
-            auth: {
-                user: 'sa1pati75@gmail.com',
-                pass: 'Sawan@123'
-            }
-  });
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+     user: 'sa1pati75@gmail.com',
+     pass: 'tnosqvmfuwvelfqa',
+    },
+   });
 
   const mailOptions = {
     from: 'sa1pati75@gmail.com',
@@ -54,7 +56,7 @@ app.post('/send-email', function(req, res) {
     } else {
       console.log('Email sent:', info.response);
       // Handle the success response
-      res.json({ success: 'Email sent successfully' });
+      res.status(200).json({ success: 'Email sent successfully' });
     }
   });
 });
