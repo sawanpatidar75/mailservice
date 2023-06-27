@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/send-email', function(req, res) {
+  console.log("req body: ",req.body);
   const service = req.body.service;
   const doctor = req.body.doctor;
   const name = req.body.name;
