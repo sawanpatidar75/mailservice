@@ -19,15 +19,16 @@ app.post('/send-email', function(req, res) {
   const appointmentDate = req.body.appointmentDate;
   const appointmentTime = req.body.appointmentTime;
 
-  const emailBody = `
-    Service: ${service}
-    Doctor: ${doctor}
-    Name: ${name}
-    Email: ${email}
-    Appointment Date: ${appointmentDate}
-    Appointment Time: ${appointmentTime}
-  `;
-
+  // const emailBody = `
+  //   Service: ${service}
+  //   Doctor: ${doctor}
+  //   Name: ${name}
+  //   Email: ${email}
+  //   Appointment Date: ${appointmentDate}
+  //   Appointment Time: ${appointmentTime}
+  // `;
+  const emailBody = `Dear ${name},\n\nWe are pleased to inform you that your appointment has been successfully booked with ${doctor} at our clinic. Here are the details of your appointment:\n\nService: ${service}\nDoctor: ${doctor}\nDate: ${appointmentDate}\nTime: ${appointmentTime}\n\nPlease arrive at least 15 minutes before your scheduled appointment time.\n\nThank you for choosing our clinic.\n\nBest regards,\nHealth Care Service\n`;
+  
   console.log("email body: ",emailBody);
 
   const transporter = nodemailer.createTransport({
@@ -44,7 +45,7 @@ app.post('/send-email', function(req, res) {
   const mailOptions = {
     from: 'sa1pati75@gmail.com',
     to: email,
-    subject: 'Your appoinment done.',
+    subject: 'Thank you for your appontment',
     text: emailBody
   };
 
@@ -52,11 +53,11 @@ app.post('/send-email', function(req, res) {
     if (error) {
       console.error('Error sending email:', error);
       // Handle the error response
-      res.status(500).json({ error: 'An error occurred while sending the email' });
+      res.status(500).json({ success: true, message: 'Appointment not booked.', data: error.message });
     } else {
       console.log('Email sent:', info.response);
       // Handle the success response
-      res.status(200).json({ success: 'Email sent successfully' });
+      res.status(200).json({ success: true, message: 'Appointment booked successfully', data: info.response });
     }
   });
 });
